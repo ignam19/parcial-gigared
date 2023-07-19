@@ -71,12 +71,11 @@ def mostrar_carga(pack, semana):
            
         
     print("\nSe finalizo la muestra de productos.")
-    continuar()
-
+   
 #------------------------------------------------------------- 
         
 def continuar():
-    input("Presione una tecla para continuar.")
+    input("Presione una tecla para continuar.\n")
 
 #------------------------------------------------------------
 
@@ -94,14 +93,51 @@ def gan_sem(pack_gigas, precios):
             ganancia_sem_pack[i] += pack_gigas[i][j] * precios[i]
             
     
-    print("Finalizo el calculo ganancia por pack en la semana.")
-    continuar()
+    
+    
     for i in range(4):
         print("La ganancia semanal del pack de %s GIGAS fue de %i"%(gigas[i], ganancia_sem_pack[i]))
-    print("Finalizo el proceso de despliegue.")
+   
     continuar()
     return ganancia_sem_pack
             
+#------------------------------------------------------------
+
+def gigas_xpack(pack_gigas):
+    gigas = ["1", "2", "3", "5"]
+    venta_xpack = [0,0,0,0]
+    #-----------------
+    # IND 0 = PACK 1GB
+    # IND 1 = PACK 2GB
+    # IND 2 = PACK 3GB
+    # IND 3 = PACK 5GB
+    #-----------------
+    for i in range(4):
+        for j in range(7):
+            venta_xpack[i] += pack_gigas[i][j] * int(gigas[i])
+        
+    
+    
+    for i in range(4):
+        print("La cantidad de gigas vendida del pack %s GIGAS fue de: %i "%(gigas[i], venta_xpack[i]))
+   
+    continuar()
+    return venta_xpack
+  
+#------------------------------------------------------------
+
+def promedio_xpack(pack):
+    promedios = [0,0,0,0]
+    gigas = [1, 2, 3, 5]
+    
+    for i in range(4):
+        promedios[i] += (pack[i] / gigas[i]) / 7
+    
+    for i in range(4):
+        print("El promedio de gigas vendida del pack %s GIGAS fue de: %.2f "%(str(gigas[i]), promedios[i]))
+            
+    continuar()
+    return promedios
 #--------------####### MAIN #######--------------------------#
 
 pack_precios = [315, 555, 965, 1620]
@@ -156,6 +192,9 @@ while decision != "salir":
     print("Se acaba de finalizar el proceso.")    
     continuar()
 
+
 ganancia_semanal = gan_sem(pack_gigas, pack_precios)
 
+cant_gigas_xpack = gigas_xpack(pack_gigas)
 
+promedio_ventas_xpack = promedio_xpack(cant_gigas_xpack)

@@ -138,6 +138,7 @@ def promedio_xpack(pack):
             
     continuar()
     return promedios
+
 #--------------####### MAIN #######--------------------------#
 
 pack_precios = [315, 555, 965, 1620]

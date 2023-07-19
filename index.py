@@ -17,9 +17,7 @@ def cargar_ventas(pack_gigas, semana):
         pack5 = verificar_entrada(pack5)
         pack_gigas[3].append(pack5)
      
-    print("\nFinalizada la carga.")
-    continuar()
-    mostrar_carga(pack_gigas, semana)
+
     return pack_gigas       
 
 #----------------------------------------------------------------
@@ -32,32 +30,25 @@ def calcular_ganancias(pack_gigas, pack_precios):
         for j in i:
             ganancias += j * pack_precios[contador]
            
-    print("Las ganancias fueron de %i"%ganancias)
-    print("\nSe finalizo el calculo de ganancias.")
-    continuar()
+    
     return ganancias
 
 #------------------------------------------------------------
 
 def can_gigas_vendidas(pack_gigas):
+    gigas = [1, 2, 3, 5]
     total_gigas = 0
-    for i in pack_gigas:
-        for j in i:
-            total_gigas += j
+    for i in range(4):
+        for j in range(7):
+            total_gigas += pack_gigas[i][j] * gigas[i]
 
-    print("\nLa cantidad de gigas vendidas fueron: %i"%total_gigas)
-    print("Se finalizo el calculo de cant de gigas vendidas.")
-    continuar()
     return total_gigas
 
 #------------------------------------------------------------
 
-def cal_promedio_ventas():
-    total = can_gigas_vendidas() / 4
+def cal_promedio_ventas(pack_gigas):
+    total = can_gigas_vendidas(pack_gigas) / 4
     
-    print("El promedio de gigas es de: %i"%total)
-    print("Se finalizo el promedio de ventas.")
-    continuar()
     return total
 
 #-------------------------------------------------------------
@@ -72,16 +63,12 @@ def verificar_entrada(venta):
 #-------------------------------------------------------------
 
 def mostrar_carga(pack, semana):
-    contador = 0
-    contador2 = 0
     gigapack = ["1", "2", "3", "5"]
-    for i in pack:
-        print("\nPack de %s GIGAS"%gigapack[contador])
-        contador += 1
-        contador2 = 0
-        for j in i:
-            print("%s: %i"%(semana[contador2], j) )
-            contador2 += 1
+    for i in range(4):
+        print("\nPack de %s GIGAS"%gigapack[i])
+        for j in range(7):
+            print("%s: %i"%(semana[j], pack[i][j]) )
+           
         
     print("\nSe finalizo la muestra de productos.")
     continuar()
@@ -91,6 +78,30 @@ def mostrar_carga(pack, semana):
 def continuar():
     input("Presione una tecla para continuar.")
 
+#------------------------------------------------------------
+
+def gan_sem(pack_gigas, precios):
+    gigas = ["1", "2", "3", "5"]
+    ganancia_sem_pack = [0, 0, 0, 0]
+    #-----------------
+    # IND 0 = PACK 1GB
+    # IND 1 = PACK 2GB
+    # IND 2 = PACK 3GB
+    # IND 3 = PACK 5GB
+    #-----------------
+    for i in range(4):
+        for j in range(7):
+            ganancia_sem_pack[i] += pack_gigas[i][j] * precios[i]
+            
+    
+    print("Finalizo el calculo ganancia por pack en la semana.")
+    continuar()
+    for i in range(4):
+        print("La ganancia semanal del pack de %s GIGAS fue de %i"%(gigas[i], ganancia_sem_pack[i]))
+    print("Finalizo el proceso de despliegue.")
+    continuar()
+    return ganancia_sem_pack
+            
 #--------------####### MAIN #######--------------------------#
 
 pack_precios = [315, 555, 965, 1620]
@@ -122,24 +133,29 @@ while decision != "salir":
     
     if decision == "1":
         pack_gigas = cargar_ventas(pack_gigas, semana)
+        mostrar_carga(pack_gigas, semana)
         
     elif decision == "2":
         ganancias = calcular_ganancias(pack_gigas, pack_precios)
+        print("Las ganancias fueron de %i"%ganancias)
         
     elif decision == "3":
         gigas_vendidas = can_gigas_vendidas(pack_gigas)
+        print("\nLa cantidad de gigas vendidas fueron: %i"%gigas_vendidas)
         
     elif decision == "4":
-        promedio = cal_promedio_ventas()
+        promedio = cal_promedio_ventas(pack_gigas)
+        print("El promedio de gigas es de: %i"%promedio)
     
     elif decision == "5":
-        pass
+        decision = "salir"
     
     else:
         input("ERROR: Esa opcion no es correcta vuelva a ingresar.")
-        continuar()
     
+    print("Se acaba de finalizar el proceso.")    
+    continuar()
 
-
+ganancia_semanal = gan_sem(pack_gigas, pack_precios)
 
 
